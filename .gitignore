@@ -1,0 +1,6 @@
+.idea
+model
+data
+__pycache__
+
+Pipfile.lock
