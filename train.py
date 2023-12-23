@@ -2,13 +2,18 @@ import os
 import pickle
 
 import pandas as pd
-from tensorflow.keras.preprocessing.sequence import pad_sequences
-from tensorflow.keras.models import Model
 from tensorflow.keras.layers import Input, LSTM, Embedding, Dense
+from tensorflow.keras.models import Model
+from tensorflow.keras.preprocessing.sequence import pad_sequences
 
 import utils
 
 data = pd.read_csv('./data/processed_conv_data.csv')
+
+if not os.path.exists('./model'):
+    os.mkdir('./model')
+    os.mkdir('./model/vocab')
+    os.mkdir('./model/saved')
 
 print('Empty rows:', data.isna().sum(), sep='\n')
 print('\nDuplicate rows:', data.duplicated().sum())
@@ -27,7 +32,7 @@ inv_vocab = {word_id: word for word, word_id in vocab.items()}
 
 vocab_data = {'vocab': vocab, 'inv_vocab': inv_vocab}
 
-with open('./data/vocab.pkl', 'wb') as vocab_file:
+with open('./model/vocab/vocab.pkl', 'wb') as vocab_file:
     pickle.dump(vocab_data, vocab_file)
 
 encoder_inp = utils.get_tokenized_texts(data['question'], vocab)

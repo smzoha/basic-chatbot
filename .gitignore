@@ -1,5 +1,5 @@
 .idea
-model
+model/saved/
 data
 __pycache__
 
